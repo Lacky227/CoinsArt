@@ -2,6 +2,7 @@ package com.veedev.api.coinsart.controllers;
 
 import com.veedev.api.coinsart.service.CurrenciesService;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,8 @@ public class CurrenciesController {
      */
     @GetMapping("/rates")
     public ResponseEntity<String> getExchangeRates(
-            @RequestParam @NotBlank String baseCurrency) {
-        return currencyService.fetchExchangeRates(baseCurrency);
+            @RequestParam @NotBlank String baseCurrency, @RequestParam @NotNull int amount) throws Exception {
+        return currencyService.fetchExchangeRates(baseCurrency, amount);
     }
 
     /**
@@ -40,7 +41,8 @@ public class CurrenciesController {
     @GetMapping("/rates/compare")
     public ResponseEntity<String> getExchangeRatesForCurrencies (
             @RequestParam @NotBlank String baseCurrency,
-            @RequestParam @NotBlank String targetCurrencies) throws Exception {
-        return currencyService.fetchExchangeRatesForCurrencies(baseCurrency, targetCurrencies);
+            @RequestParam @NotBlank String targetCurrencies,
+            @RequestParam @NotNull int amount) throws Exception {
+        return currencyService.fetchExchangeRatesForCurrencies(baseCurrency, targetCurrencies, amount);
     }
 }
